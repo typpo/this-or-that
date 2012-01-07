@@ -3,3 +3,4 @@
 .monitor
 npm-debug.log
 node_modules/
+groups/
