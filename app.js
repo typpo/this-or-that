@@ -6,10 +6,15 @@ var fs = require('fs');
 var im = require('imagemagick');
 var path = require('path');
 
+// Express config
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
+app.use(express.cookieParser());
+app.use(express.session({ secret: "keyboard cat" }));
 
+
+// Load data
 var groups = [];
 groups[0] = fs.readFileSync(__dirname + '/public/groups/meta0', 'ascii');
 groups[1] = fs.readFileSync(__dirname + '/public/groups/meta1', 'ascii');
@@ -18,14 +23,18 @@ var files = [];
 files[0] = clean_file_list('/public/groups/0');
 files[1] = clean_file_list('/public/groups/1');
 
-
+// App
 app.get('/', function(req, res) {
-  var grp = Math.random() < .5 ? 0 : 1;
-  var imgfile = files[0][Math.floor(Math.random() * files[0].length)];
-  var imgpath = '/groups/' + grp + '/' + imgfile;
+  var grp, imgfile, imgpath = null;
+  do {
+    grp = Math.random() < .5 ? 0 : 1;
+    imgfile = files[0][Math.floor(Math.random() * files[0].length)];
+    imgpath = '/groups/' + grp + '/' + imgfile;
+  } while (imgpath == req.session.last);
   lazy_image_resize(__dirname + '/public' + imgpath, function(err, fullpath) {
     // Convert full path to relative path
     var newpath = path.relative(__dirname + '/public', fullpath);
+    req.session.last = imgpath;
     res.render('index', {
       title: 'App Name',
       img: newpath,
@@ -34,17 +43,17 @@ app.get('/', function(req, res) {
   });
 });
 
-// Removes resized files
+// Return list of files without ones that have been resized
 function clean_file_list(path) {
   var fullpath = __dirname + path;
-  var files = fs.readdirSync(path)
+  var files = fs.readdirSync(fullpath)
+  var ret = [];
   for (var i=0; i < files.length; i++) {
-    if (files[i].indexOf('-sized') > -1) {
-      files.remove(i);
-      i--;
+    if (files[i].indexOf('-sized') < 0) {
+      ret.push(files[i]);
     }
   }
-  return files;
+  return ret;
 }
 
 // Resizes image if necessary
