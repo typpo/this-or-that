@@ -57,7 +57,7 @@ app.get('/', function(req, res) {
     req.session.last.push(imgpath);
     req.session.last_seen = imgpath;
     res.render('index', {
-      title: 'App Name',
+      title: '___ or ___?',
       img: newpath,
       groups: groups,
     });
