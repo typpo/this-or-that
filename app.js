@@ -51,30 +51,37 @@ app.get('/', function(req, res) {
     req.session.last = [];
   }
 
-  var grp, imgfile, imgpath = null;
+  var grp, imgpath = null;
   do {
     grp = Math.random() < .5 ? 0 : 1;
-    imgfile = files[grp][Math.floor(Math.random() * files[grp].length)];
-    imgpath = '/groups/' + grp + '/' + imgfile;
+    imgpath = files[grp][Math.floor(Math.random() * files[grp].length)];
+    aboslute_imgpath = path.join(__dirname + '/public', imgpath);
   } while (req.session.last.indexOf(imgpath) > -1
     || req.session.last_seen == imgpath);
   console.log('chose ' + imgpath);
 
-  lazy_image_resize(__dirname + '/public' + imgpath, function(err, fullpath) {
+  lazy_image_resize(imgpath, function(err, fullpath) {
     // Convert full path to relative path
     var newpath = path.relative(__dirname + '/public', fullpath);
     req.session.last.push(imgpath);
     req.session.last_seen = imgpath;
+
+    if (!(imgpath in votes)) {
+      votes[imgpath] = [0, 0];
+    }
     res.render('index', {
       title: '___ or ___?',
       img: newpath,
       groups: groups,
+      code: sha1(imgpath),
+      stats: votes[imgpath],
     });
   });
 });
 
 app.get('/vote/:img/:choice', function(req, res) {
-  var path = file_id_mapping[req.params.img];
+  var imgfile = file_id_mapping[req.params.img];
+  console.log('got vote for ' + imgfile);
   var choice = parseInt(req.params.choice);
   if (isNaN(choice) || choice > 1) {
     return;
@@ -86,21 +93,20 @@ app.get('/vote/:img/:choice', function(req, res) {
 
   });
     */
-  if (!(path in votes)) {
-    votes[path] = [0, 0];
-  }
-  votes[path][choice]++;
+  console.log('got vote for ' + imgfile + ' = ' + groups[choice]);
+  // TODO eventually record this in db
+  votes[imgfile][choice]++;
   res.end('true');
 });
 
 // Return list of files without ones that have been resized
-function clean_file_list(path) {
-  var fullpath = __dirname + path;
+function clean_file_list(dir) {
+  var fullpath = __dirname + dir;
   var dirfiles = fs.readdirSync(fullpath)
   var ret = [];
   for (var i=0; i < dirfiles.length; i++) {
     if (dirfiles[i].indexOf('-sized') < 0) {
-      ret.push(dirfiles[i]);
+      ret.push(path.resolve(__dirname + dir, dirfiles[i]));
     }
   }
   generate_id_mapping(ret);

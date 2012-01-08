@@ -9,9 +9,9 @@ div.topbar
         li.active
           a(href='#') Home
         li
-          a(href='#') About
+          a(href='#',style='color:red;font-weight:bold;') More quizzes
         li
-          a(href='#') Contact
+          a(href='#') About
 
 div.container
   div.content
@@ -24,15 +24,18 @@ div.container
           h1 #{groups[0]} or #{groups[1]}?
         div.row
           div.span10
-            img(src='#{img}')
-          div.span6
-            h1 You Choose:
-            p
-              h5
-                a(class='btn large') #{groups[0]}
-            p
-              h5
-                a(class='btn large') #{groups[1]}
+            img(id='main_img', code='#{code}', src='#{img}')
+          div.span6(style='background:#ccc')
+            div(style='margin:20px')
+              h1 You Choose:
+              p
+                h5
+                  a.btn.large(href='javascript:vote(0);') #{groups[0]}
+                  &raquo; #{stats[0]} people think so
+              p
+                h5
+                  a.btn.large(href='javascript:vote(1);') #{groups[1]}
+                  &raquo; #{stats[1]} people think so
 
   footer
     p &copy; 2011
