@@ -1,9 +1,11 @@
 var express = require('express');
 var app = express.createServer();
+var mongo =require('mongodb');
+var im = require('imagemagick');
+
 var url = require('url');
 var http = require('http');
 var fs = require('fs');
-var im = require('imagemagick');
 var path = require('path');
 
 // Settings
@@ -21,6 +23,8 @@ app.set('view engine', 'jade');
 
 app.use(express.cookieParser());
 app.use(express.session({secret: "some key"}));
+
+app.use(express.static(__dirname + '/public'));
 
 // Load data
 var groups = [];
@@ -103,5 +107,16 @@ function lazy_image_resize(abs_raw_path, cb) {
 
 }
 
-app.use(express.static(__dirname + '/public'));
-app.listen(8080);
+
+// Database
+console.log('Connecting to db');
+
+var Db = mongo.Db,
+    Connection = mongo.Connection,
+    Server = mongo.Server;
+
+var db = new Db('comparison', new Server("127.0.0.1", 27017, {}));
+db.open(function(err, db) {
+  console.log('Connected to db');
+  app.listen(8080);
+});

@@ -19,15 +19,20 @@ div.container
       h1 #{title}
         small text
     div.row
-      div.span10
-        h2 #{groups[0]} or #{groups[1]}?
-        img(src='#{img}')
-      div.span4
-        h3 Choices
-        p
-          a #{groups[0]}
-        p
-          a #{groups[1]}
+      div.span16
+        center
+          h1 #{groups[0]} or #{groups[1]}?
+        div.row
+          div.span10
+            img(src='#{img}')
+          div.span6
+            h1 You Choose:
+            p
+              h5
+                a(class='btn large') #{groups[0]}
+            p
+              h5
+                a(class='btn large') #{groups[1]}
 
   footer
     p &copy; 2011
