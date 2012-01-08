@@ -5,6 +5,7 @@
       , "jade": "0.14.2"
       , "imagemagick": "0.1.2"
       , "mongodb": "0.9.7-3-5"
+      , "sha1": "0.0.1"
     }
   , "devDependencies": {
     }

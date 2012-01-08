@@ -7,6 +7,7 @@ var url = require('url');
 var http = require('http');
 var fs = require('fs');
 var path = require('path');
+var sha1 = require('sha1');
 
 // Settings
 var config = {
@@ -23,7 +24,6 @@ app.set('view engine', 'jade');
 
 app.use(express.cookieParser());
 app.use(express.session({secret: "some key"}));
-
 app.use(express.static(__dirname + '/public'));
 
 // Load data
@@ -31,7 +31,11 @@ var groups = [];
 groups[0] = fs.readFileSync(__dirname + '/public/groups/meta0', 'ascii').trim();
 groups[1] = fs.readFileSync(__dirname + '/public/groups/meta1', 'ascii').trim();
 
+var current_competition = slugify(groups[0] + ' or ' + groups[1]);
+var votes = {};
+
 var files = [];
+var file_id_mapping = {};
 files[0] = clean_file_list('/public/groups/0');
 files[1] = clean_file_list('/public/groups/1');
 
@@ -69,16 +73,37 @@ app.get('/', function(req, res) {
   });
 });
 
+app.get('/vote/:img/:choice', function(req, res) {
+  var path = file_id_mapping[req.params.img];
+  var choice = parseInt(req.params.choice);
+  if (isNaN(choice) || choice > 1) {
+    return;
+  }
+
+  /*
+  db.collection(current_competition, function(err, collection) {
+    collection.insert(
+
+  });
+    */
+  if (!(path in votes)) {
+    votes[path] = [0, 0];
+  }
+  votes[path][choice]++;
+  res.end('true');
+});
+
 // Return list of files without ones that have been resized
 function clean_file_list(path) {
   var fullpath = __dirname + path;
-  var files = fs.readdirSync(fullpath)
+  var dirfiles = fs.readdirSync(fullpath)
   var ret = [];
-  for (var i=0; i < files.length; i++) {
-    if (files[i].indexOf('-sized') < 0) {
-      ret.push(files[i]);
+  for (var i=0; i < dirfiles.length; i++) {
+    if (dirfiles[i].indexOf('-sized') < 0) {
+      ret.push(dirfiles[i]);
     }
   }
+  generate_id_mapping(ret);
   return ret;
 }
 
@@ -105,6 +130,21 @@ function lazy_image_resize(abs_raw_path, cb) {
     }
   });
 
+}
+
+function generate_id_mapping(dirfiles) {
+  for (var i=0; i < dirfiles.length; i++) {
+    file_id_mapping[sha1(dirfiles[i])] = dirfiles[i];
+  }
+}
+
+function slugify(str) {
+  // TODO move this to some utility file
+  str = str.trim().toLowerCase()
+      .replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+      .replace(/\s+/g, '-') // collapse whitespace and replace by -
+      .replace(/-+/g, '-'); // collapse dashes
+  return str;
 }
 
 
