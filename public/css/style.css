@@ -1,0 +1,15 @@
+.bordered {padding:4px;margin:0 0 18px 20px;border:1px solid #ddd;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;-webkit-box-shadow:0 1px 1px rgba(0, 0, 0, 0.075);-moz-box-shadow:0 1px 1px rgba(0, 0, 0, 0.075);box-shadow:0 1px 1px rgba(0, 0, 0, 0.075);}
+
+.youchoose {
+  padding: 20px;
+  background: #eee;
+}
+
+.morequizzes {
+  padding: 20px;
+}
+
+.question-header {
+  font-size: 40px;
+  font-weight: bold;
+}

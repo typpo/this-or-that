@@ -70,7 +70,7 @@ app.get('/', function(req, res) {
       votes[imgpath] = [0, 0];
     }
     res.render('index', {
-      title: '___ or ___?',
+      title: 'Tough to Choose',
       img: newpath,
       groups: groups,
       code: sha1(imgpath),

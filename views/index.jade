@@ -4,7 +4,7 @@ head
 div.topbar
   div.fill
     div.container
-      a(href='#').brand #{title}
+      a(href='#', style='font-family: "Spicy Rice", cursive;').brand #{title}
       ul.nav
         li.active
           a(href='#') Home
@@ -21,12 +21,18 @@ div.container
     div.row
       div.span16
         center
-          h1 #{groups[0]} or #{groups[1]}?
+          span.question-header #{groups[0]} or #{groups[1]}?
+        hr
         div.row
+          div.span10.offset3
+            div.alert-message.warning#message
+              a.close(href='javascript:$("#message").hide("fast");') ×
+              p You've seen it all!
           div.span10
-            img(id='main_img', code='#{code}', src='#{img}')
-          div.span6(style='background:#ccc')
-            div(style='margin:20px')
+            p(style='text-align:center;')
+              img.bordered#main-img(code='#{code}', src='#{img}', style='text-align:center;')
+          div.span6
+            div.bordered.youchoose
               h1 You Choose:
               p
                 h5
@@ -36,6 +42,17 @@ div.container
                 h5
                   a.btn.large(href='javascript:vote(1);') #{groups[1]}
                   &raquo; #{stats[1]} people think so
+            div.bordered.morequizzes
+              p
+                h4 More quizzes
+                ul
+                  li
+                    a(href='#') President or grapefruit
+                  li
+                    a(href='#') Ivy league student or gay European
+                  li
+                    a(href='#') Convicted criminal or politician
+
+
 
   footer
-    p &copy; 2011
