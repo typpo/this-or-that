@@ -1,14 +1,15 @@
 {
     "name": "App"
   , "dependencies": {
-      , "express": "2.5.2"
+      "express": "2.5.2"
       , "jade": "0.14.2"
       , "imagemagick": "0.1.2"
-      , "mongodb": "0.9.7-3-5"
+      , "mongodb": "0.9.7"
       , "sha1": "0.0.1"
     }
   , "devDependencies": {
     }
   , "main": "app"
   , "engines": { "node": ">= 0.4.0" }
+  , "version": "0.0.1"
 }
