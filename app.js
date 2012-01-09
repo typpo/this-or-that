@@ -1,13 +1,14 @@
-var express = require('express');
-var app = express.createServer();
-var mongo =require('mongodb');
-var im = require('imagemagick');
+var express = require('express')
+  , app = express.createServer()
+  , mongo =require('mongodb')
+  , im = require('imagemagick')
 
-var url = require('url');
-var http = require('http');
-var fs = require('fs');
-var path = require('path');
-var sha1 = require('sha1');
+  , url = require('url')
+  , http = require('http')
+  , fs = require('fs')
+  , path = require('path')
+  , sha1 = require('sha1')
+;
 
 // Settings
 var config = {
