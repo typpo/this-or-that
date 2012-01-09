@@ -95,8 +95,25 @@ app.get('/vote/:img/:choice', function(req, res) {
     */
   console.log('got vote for ' + imgfile + ' = ' + groups[choice]);
   // TODO eventually record this in db
-  votes[imgfile][choice]++;
+  try {
+    votes[imgfile][choice]++;
+  }
+  catch(e) {
+
+  }
   res.end('true');
+});
+
+app.get('/create', function(req, res) {
+  res.render('create', {
+    title: 'Tough to Choose',
+
+  });
+});
+
+app.post('/create', function(req, res) {
+  // optional password, two lists of imgs
+
 });
 
 // Return list of files without ones that have been resized
