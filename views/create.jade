@@ -1,0 +1,89 @@
+head
+  include bootstrap
+
+div.topbar
+  div.fill
+    div.container
+      a(href='#', style='font-family: "Spicy Rice", cursive;').brand #{title}
+      ul.nav
+        li.active
+          a(href='#') Home
+        li
+          a(href='#',style='color:red;font-weight:bold;') More quizzes
+        li
+          a(href='#') About
+
+div.container
+  div.content
+    div.page-header
+      h1 #{title}
+        small text
+    div.row
+      div.span16
+        center
+          span.question-header Create a quiz
+        hr
+        form
+          div.row
+            div.span10.offset3
+                fieldset
+                  div.clearfix
+                    label(for='category_a') Category A
+                    div.input
+                      input.xlarge#category_a
+                  div.clearfix
+                    label(for='category_b') Category B
+                    div.input
+                      input.xlarge#category_b
+
+
+                  center
+                    h3 ___ or ___
+
+          div.row
+            div.span16
+              center
+                h4 Paste image URLs below
+
+            div.span8
+              center
+                h3 ___
+              fieldset
+                div.clearfix.input
+                    input.span4#category_a1(placeholder='http://...')
+                div.clearfix.input
+                    input.span4#category_a1(placeholder='http://...')
+                div.clearfix.input
+                    input.span4#category_a1(placeholder='http://...')
+                div.clearfix.input
+                    input.span4#category_a1(placeholder='http://...')
+                div.clearfix.input
+                    input.span4#category_a1(placeholder='http://...')
+                div.clearfix.input
+                    input.span4#category_a1(placeholder='http://...')
+                div.clearfix.input
+                    input.span4#category_a1(placeholder='http://...')
+            div.span8
+              center
+                h3 ___
+              fieldset
+                div.clearfix.input
+                    input.span4#category_b1(placeholder='http://...')
+                div.clearfix.input
+                    input.span4#category_b1(placeholder='http://...')
+                div.clearfix.input
+                    input.span4#category_b1(placeholder='http://...')
+                div.clearfix.input
+                    input.span4#category_b1(placeholder='http://...')
+                div.clearfix.input
+                    input.span4#category_b1(placeholder='http://...')
+                div.clearfix.input
+                    input.span4#category_b1(placeholder='http://...')
+                div.clearfix.input
+                    input.span4#category_b1(placeholder='http://...')
+            div.span16
+              center
+                input.btn.primary(type='submit', value='Submit')
+
+
+  footer
