@@ -158,6 +158,7 @@ function lazy_image_resize(abs_raw_path, cb) {
 
 function generate_id_mapping(dirfiles) {
   for (var i=0; i < dirfiles.length; i++) {
+    console.log('hashing ' + dirfiles[i]);
     file_id_mapping[sha1(dirfiles[i])] = dirfiles[i];
   }
 }
