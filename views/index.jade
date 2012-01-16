@@ -24,10 +24,6 @@ div.container
           span.question-header #{groups[0]} or #{groups[1]}?
         hr
         div.row
-          div.span10.offset3
-            div.alert-message.warning#message
-              a.close(href='javascript:$("#message").hide("fast");') ×
-              p You've seen it all!
           div.span10
             p(style='text-align:center;')
               img.bordered#main-img(code='#{code}', src='#{img}', style='text-align:center;')
@@ -55,7 +51,7 @@ div.container
             div.bordered
               center
                 h4
-                  a(href='#') Create your own!
+                  a(href='/create') Create your own!
 
 
 
