@@ -1,5 +1,6 @@
 head
   include bootstrap
+  script(src='/js/create.js')
 
 div.topbar
   div.fill
@@ -26,29 +27,27 @@ div.container
         form
           div.row
             div.span10.offset3
-                fieldset
-                  div.clearfix
-                    label(for='category_a') Category A
-                    div.input
-                      input.xlarge#category_a
-                  div.clearfix
-                    label(for='category_b') Category B
-                    div.input
-                      input.xlarge#category_b
-
-
-                  center
-                    h3 ___ or ___
+              center
+                h4 Name your two categories:
+              fieldset
+                div.clearfix
+                  label(for='category_a') First category
+                  div.input
+                    input.xlarge#category_a
+                div.clearfix
+                  label(for='category_b') Second category
+                  div.input
+                    input.xlarge#category_b
 
           div.row
             div.span16
               center
-                h4 Paste image URLs below
+                h4 Now paste in links to images for each category:
 
             div.span8
               center
-                h3 ___
-              fieldset
+                h3#title-a
+              fieldset#fields-a
                 div.clearfix.input
                     input.span4#category_a1(placeholder='http://...')
                 div.clearfix.input
@@ -65,8 +64,8 @@ div.container
                     input.span4#category_a1(placeholder='http://...')
             div.span8
               center
-                h3 ___
-              fieldset
+                h3#title-b
+              fieldset#fields-b
                 div.clearfix.input
                     input.span4#category_b1(placeholder='http://...')
                 div.clearfix.input
