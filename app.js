@@ -8,6 +8,9 @@ var express = require('express')
   , fs = require('fs')
   , path = require('path')
   , sha1 = require('sha1')
+  , knox = require('knox')
+
+  , s3_config = require('./s3.js')
 ;
 
 // Settings
@@ -17,6 +20,7 @@ var config = {
 
   RESIZE_WIDTH: 500,
 
+  TMP_DIR: '/tmp/tough-to-choose'
 }
 
 // Express config
@@ -156,6 +160,7 @@ function lazy_image_resize(abs_raw_path, cb) {
 
 }
 
+// Remember which 'codes' (sent to client) lead to which files
 function generate_id_mapping(dirfiles) {
   for (var i=0; i < dirfiles.length; i++) {
     console.log('hashing ' + dirfiles[i]);
@@ -172,8 +177,26 @@ function slugify(str) {
   return str;
 }
 
+/* S3 Related stuff */
 
-// Database
+var s3 = knox.createClient(s3_config.login);
+
+function send_to_s3(url) {
+  // Download & resize
+
+  // Upload
+
+}
+
+// Split hashed urls into smaller buckets
+function url_to_s3_path(url) {
+  var s = sha1(url);
+  return s.slice(0, 8) + '/' + s.slice(8, 16)
+    + '/' + s.slice(16, 24) + '/' + s.slice(24);
+}
+
+
+/* Database related stuff */
 console.log('Connecting to db');
 
 var Db = mongo.Db,

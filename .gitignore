@@ -1,6 +1,7 @@
 *~
 *.swp
 .monitor
+s3.js
 npm-debug.log
 node_modules/
 *-sized*
